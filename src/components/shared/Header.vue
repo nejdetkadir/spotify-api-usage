@@ -7,8 +7,20 @@
     div.w-100.bg-dark
     ul.navbar-nav.px-3
       li.nav-item.text-nowrap
-        a.nav-link(href='#') Sign out
+        button.nav-link.btn.btn-default.text-white(@click.prevent="logout") Sign out
 </template>
+
+<script>
+  export default {
+    methods: {
+      logout() {
+        this.$store.dispatch("logoutUser").then(() => {
+
+        })
+      }
+    }
+  }
+</script>
 
 <style scoped>
 img{

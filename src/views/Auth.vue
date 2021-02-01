@@ -8,15 +8,32 @@
             a.nav-link.active(aria-current='page' href='https://www.spotify.com/premium/') Premium
             a.nav-link(href='https://support.spotify.com/') Support
             a.nav-link(href='https://www.spotify.com/download/') Download
-            a.nav-link(href='https://www.spotify.com/signup/') Sign Up
+            a.nav-link(href='https://www.spotify.com/signup/') Sign up
       main.px-3
         h1 Listening is everything
         p.lead Millions of songs and podcasts. No credit card needed.
-        button.btn.btn-lg.btn-secondary.fw-bold.mt-2(href='#') Sign in&nbsp;
+        button.btn.btn-lg.btn-secondary.fw-bold.mt-2(@click.prevent="signIn()") Sign in&nbsp;
           img#sign-in(src="@/assets/logo.png")
       footer.mt-auto.text-white-50
       | 2021 © Spotify AB
 </template>
+
+<script>
+  import querystring from "querystring";
+  export default {
+    methods: {
+      signIn() {
+        let url = "https://accounts.spotify.com/authorize?" + querystring.stringify({
+          response_type: 'code',
+          client_id: process.env.VUE_APP_SPOTIFY_CLIENT_ID,
+          scope: 'user-read-private user-read-email user-read-recently-played user-read-playback-state user-modify-playback-state user-read-currently-playing',
+          redirect_uri: process.env.VUE_APP_SPOTIFY_REDIRECT_URL,
+        });
+        window.location.href = url
+      }
+    }
+  }
+</script>
 
 <style scoped>
 .btn-secondary,
