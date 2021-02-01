@@ -1,14 +1,10 @@
 <template lang="pug">
   .container.text-center
-    img(alt='Vue logo' src='./assets/logo.png')
-    p spotify api usage
+    router-link(to='/') Home
+    | |
+    router-link(to='/auth') Auth
+    router-view
 </template>
-
-<script>
-export default {
-  name: 'App',
-}
-</script>
 
 <style>
 </style>
