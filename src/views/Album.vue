@@ -18,7 +18,6 @@
                 br
               p
                 b {{ this.$store.getters.getArtistAlbum.label }}
-          // burada
           .row.text-white
             h1.h1 Popular
             hr.text-white

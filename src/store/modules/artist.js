@@ -52,7 +52,7 @@ const mutations = {
 
 const actions = {
   initArtist({dispatch}, id) {
-    if (id !== undefined && router.currentRoute.fullPath === "/") {
+    if (id !== undefined && router.currentRoute.fullPath.split("/")[1] === "artist") {
       dispatch("getArtist", id)
       dispatch("getArtistTopTracks", id)
       dispatch("getArtistAlbums", id)

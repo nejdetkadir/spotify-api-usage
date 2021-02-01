@@ -6,18 +6,22 @@
         Sidebar
         main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
           .d-flex.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3
-            img(:src="this.$store.getters.getArtist.images[1].url")
+            img(src="@/assets/search.jpg")
             .d-block.p-2.text-white
-              h1.h2.text-white.page-title {{this.$store.getters.getArtist.name}}
+              h1.h2.text-white.page-title Search
               p
-                b Followers :&nbsp;
-                | {{ this.$store.getters.getArtist.followers.total }}
-              .d-flex
-                p
-                  b Genres :     &nbsp;
-                  a.text-white(v-for="(i, index) in this.$store.getters.getArtist.genres" :key="index") {{ index >  0 ? `, ${i}` : i  }}
+                b Listening is everything
+
           .row.text-white
-            h1.h1 Popular
+            h1.h1 Artists
+            hr.text-white
+            .col-md-2(v-for="(a, index) in this.$store.getters.getSearchData.artists.items" :key="index")
+              router-link(:to="'/artist/' + a.id").album.text-white
+                img(:src='a.images.length > 0 ? a.images[0].url : require("../assets/search.jpg") ')
+                .card-body
+                  b.card-text {{a.name}}
+          .row.text-white
+            h1.h1 Tracks
             hr.text-white
           table.table.table-borderless.text-white
             thead
@@ -28,7 +32,7 @@
                 th(scope='col')
                   font-awesome-icon(icon="clock")
             tbody
-              tr(v-for="(t, index) in this.$store.getters.getArtistTopTracks" :key="index")
+              tr(v-for="(t, index) in this.$store.getters.getSearchData.tracks.items" :key="index")
                 th(scope='row') {{ index }}
                 td
                   .track-details
@@ -37,27 +41,20 @@
                       a(@click="playTrack(t)")
                         | {{ t.name }}
                       br
-                      router-link.artist-name(:to="'/artist/' + artist.id" v-for="(artist, index) in t.artists" tag="a" :key="index") {{index > 0 ? "," : ""}} {{ artist.name }}
+                      router-link.artist-name(:to="'/artist/' + artist.id" v-for="(artist, index) in t.album.artists" tag="a" :key="index") {{index > 0 ? "," : ""}} {{ artist.name }}
                 td
-                  router-link(:to="'/album/' + t.album.id" tag="a").text-white {{ t.name }}
-                td {{ Math.floor((t.duration_ms/1000/60) << 0)}}:{{Math.floor((t.duration_ms/1000) % 60)}}
-          .row.text-white
-            h1.h1 Albums
-            hr.text-white
-            .col-md-2(v-for="(a, index) in this.$store.getters.getArtistAlbums" :key="index")
-              router-link(:to="'/album/' + a.id").album.text-white
-                img(:src="a.images[1].url")
-                .card-body
-                  b.card-text {{a.name}}
+                  router-link(:to="'/album/' + t.album.id" tag="a").text-white {{ t.album.name }}
+                td
+                  | &nbsp;{{ Math.floor((t.duration_ms/1000/60) << 0)}}:{{Math.floor((t.duration_ms/1000) % 60)}}
     Footer
 </template>
 
 <script>
-import Header from "/src/components/shared/Header"
+import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
 import Footer from "@/components/shared/Footer";
-
 export default {
+  name: "Search",
   components: {
     Header,
     Sidebar,
@@ -65,19 +62,9 @@ export default {
   },
   methods: {
     playTrack(t) {
-      this.$store.dispatch("playTrack", t.album.uri)
+      this.$store.dispatch("playTrack", t.uri)
     }
-  },
-  created() {
-    this.$watch(
-        () => this.$route.params,
-        (toParams) => {
-          if (toParams.id !== undefined) {
-            this.$store.dispatch("initArtist", toParams.id)
-          }
-        }
-    )
-  },
+  }
 }
 </script>
 

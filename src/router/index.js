@@ -5,6 +5,7 @@ import Auth from '../views/Auth'
 import store from "@/store";
 import Artist from "@/views/Artist";
 import Album from "@/views/Album";
+import Search from "@/views/Search";
 
 Vue.use(VueRouter)
 
@@ -71,6 +72,18 @@ const routes = [
         store.dispatch("getArtistAlbum", to.params.id).then(() => {
           next()
         })
+      } else {
+        next("/auth")
+      }
+    },
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search,
+    beforeEnter(to, from, next) {
+      if (store.getters.isAuthenticated) {
+        next()
       } else {
         next("/auth")
       }

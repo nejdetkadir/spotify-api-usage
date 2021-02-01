@@ -7,7 +7,7 @@
             font-awesome-icon(icon='home')
             | &nbsp;Homepage
         li.nav-item
-          a.nav-link(href='#')
+          router-link(to="/search").nav-link
             font-awesome-icon(icon='search')
             | &nbsp;Search
         li.nav-item

@@ -2,7 +2,15 @@ import Vue from "vue";
 
 const state = {
   recentlyPlayed: [],
-  currentPlayback: {}
+  currentPlayback: {},
+  searchData: {
+    artists: {
+      items: []
+    },
+    tracks: {
+      items: []
+    }
+  }
 };
 
 const getters = {
@@ -11,6 +19,9 @@ const getters = {
   },
   getCurrentPlayback(state) {
     return state.currentPlayback
+  },
+  getSearchData(state) {
+    return state.searchData
   }
 };
 
@@ -19,7 +30,10 @@ const mutations = {
     state.recentlyPlayed = data
   },
   setCurrentPlayback(state, data) {
-    return state.currentPlayback = data
+    state.currentPlayback = data
+  },
+  setSearchData(state, data) {
+    state.searchData = data
   }
 };
 
@@ -115,6 +129,22 @@ const actions = {
       }
     })
   },
+  searchData({getters, commit}, val) {
+    Vue.axios.get(`https://api.spotify.com/v1/search?q=${encodeURI(val)}&type=track,artist&market=${getters.getUser.country}`, {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + getters.getTokens["access_token"]
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        commit("setSearchData", res.data)
+      } else {
+        console.log("searchError")
+      }
+    }).catch(() => {
+      console.log("searchError")
+    })
+  }
 };
 
 export default {
