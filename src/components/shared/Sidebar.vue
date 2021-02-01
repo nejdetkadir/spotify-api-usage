@@ -41,8 +41,4 @@ name: "Sidebar"
 .sidebar .nav-link:hover {
   color: white !important;
 }
-
-.sidebar-title:hover{
-  color: grey !important;
-}
 </style>

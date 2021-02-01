@@ -10,8 +10,8 @@
 </template>
 
 <script>
-  import Header from "/src/components/Header"
-  import Sidebar from "@/components/Sidebar";
+  import Header from "/src/components/shared/Header"
+  import Sidebar from "@/components/shared/Sidebar";
 
   export default {
     components: {
