@@ -3,9 +3,15 @@ import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from './store'
+import router from './router'
 import "bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css"
-import router from './router'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHome, faSearch, faList, faPlusSquare, faHeart} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faHome, faSearch, faList, faPlusSquare, faHeart)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
