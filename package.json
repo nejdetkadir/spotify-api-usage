@@ -12,6 +12,8 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.0-beta1",
     "core-js": "^3.6.5",
+    "pug": "^3.0.0",
+    "pug-plain-loader": "^1.1.0",
     "vue": "^2.6.11",
     "vue-axios": "^3.2.4",
     "vuex": "^3.4.0"
