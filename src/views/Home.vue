@@ -22,9 +22,11 @@
                 td
                   .track-details
                     img(:src="t.track.album.images[2].url")
-                    div  {{ t.track.name }}
+                    div
+                      a(@click="playTrack(t)")
+                        | {{ t.track.name }}
                       br
-                      router-link.artist-name(:to="'/artist/' + artist.id" v-for="(artist, index) in t.track.album.artists" tag="a") {{index > 0 ? "," : ""}} {{ artist.name }}
+                      router-link.artist-name(:to="'/artist/' + artist.id" v-for="(artist, index) in t.track.album.artists" tag="a" :key="index") {{index > 0 ? "," : ""}} {{ artist.name }}
                 td
                   router-link(:to="'/album/' + t.track.album.id" tag="a").text-white {{ t.track.name }}
                 td.played_at {{ t.played_at }}
@@ -45,6 +47,11 @@
       Header,
       Sidebar,
       Footer
+    },
+    methods: {
+      playTrack(t) {
+        this.$store.dispatch("playTrack", t.track.album.uri)
+      }
     }
   }
 </script>
@@ -77,6 +84,9 @@ a:hover{
 }
 .track-details div {
   padding: 0.5rem;
+}
+table{
+  margin-bottom: 100px;
 }
 @media only screen and (max-width: 600px) {
   main{

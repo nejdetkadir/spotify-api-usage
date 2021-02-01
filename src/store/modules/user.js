@@ -49,6 +49,10 @@ const mutations = {
         }
       ]
     }
+
+    // track
+    state.recentlyPlayed = []
+    state.currentPlayback = {}
   }
 };
 
@@ -68,6 +72,7 @@ const actions = {
           commit("setToken", res.data)
           dispatch("getUser")
           dispatch("getRecentlyPlayedTracks")
+          dispatch("getCurrentPlayback")
         } else {
           console.log()
           dispatch("logoutUser")
