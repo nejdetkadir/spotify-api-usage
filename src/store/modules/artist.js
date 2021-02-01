@@ -1,9 +1,11 @@
 import Vue from "vue";
+import router from "@/router";
 
 const state = {
   artist: {},
   artistTopTracks: [],
-  artistAlbums: []
+  artistAlbums: [],
+  artistAlbum: {}
 };
 
 const getters = {
@@ -15,6 +17,9 @@ const getters = {
   },
   getArtistAlbums(state) {
     return state.artistAlbums
+  },
+  getArtistAlbum(state) {
+    return state.artistAlbum
   }
 };
 
@@ -36,12 +41,18 @@ const mutations = {
   },
   clearArtistAlbums(state) {
     state.artistAlbums = {}
+  },
+  setArtistAlbum(state, data) {
+    state.artistAlbum = data
+  },
+  clearArtistAlbum(state) {
+    state.artistAlbum = {}
   }
 };
 
 const actions = {
   initArtist({dispatch}, id) {
-    if (id !== undefined) {
+    if (id !== undefined && router.currentRoute.fullPath === "/") {
       dispatch("getArtist", id)
       dispatch("getArtistTopTracks", id)
       dispatch("getArtistAlbums", id)
@@ -75,10 +86,10 @@ const actions = {
         commit("clearArtist")
         commit("setArtist", res.data)
       } else {
-        console.log("getRecentlyPlayedTracksError")
+        console.log("getArtistError")
       }
     }).catch((err) => {
-      console.log("getRecentlyPlayedTracksError : " + err)
+      console.log("getArtistError : " + err)
     })
   },
   getArtistAlbums({getters, commit}, id) {
@@ -92,10 +103,28 @@ const actions = {
         commit("clearArtistAlbums")
         commit("setArtistAlbums", res.data.items)
       } else {
-        console.log("getRecentlyPlayedTracksError")
+        console.log("getArtistAlbumsError")
       }
     }).catch((err) => {
-      console.log("getRecentlyPlayedTracksError : " + err)
+      console.log("getArtistAlbumsError : " + err)
+    })
+  },
+  getArtistAlbum({getters, commit, dispatch}, id) {
+    Vue.axios.get(`https://api.spotify.com/v1/albums/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + getters.getTokens["access_token"]
+      }
+    }).then(res => {
+      if (res.status === 200) {
+        commit("clearArtistAlbum")
+        commit("setArtistAlbum", res.data)
+        dispatch("getArtistAlbums", res.data.artists[0].id)
+      } else {
+        console.log("getArtistAlbumError")
+      }
+    }).catch((err) => {
+      console.log("getArtistAlbumError : " + err)
     })
   }
 };

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Auth from '../views/Auth'
 import store from "@/store";
 import Artist from "@/views/Artist";
+import Album from "@/views/Album";
 
 Vue.use(VueRouter)
 
@@ -51,12 +52,23 @@ const routes = [
     path: '/artist/:id',
     name: 'Artist',
     component: Artist,
-    route: {
-      canReuse: false
-    },
     beforeEnter(to, from, next) {
       if (store.getters.isAuthenticated) {
         store.dispatch("initArtist", to.params.id).then(() => {
+          next()
+        })
+      } else {
+        next("/auth")
+      }
+    },
+  },
+  {
+    path: '/album/:id',
+    name: 'Album',
+    component: Album,
+    beforeEnter(to, from, next) {
+      if (store.getters.isAuthenticated) {
+        store.dispatch("getArtistAlbum", to.params.id).then(() => {
           next()
         })
       } else {
