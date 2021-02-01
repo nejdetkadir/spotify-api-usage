@@ -7,16 +7,16 @@
     div.w-100.bg-dark
     ul.navbar-nav.px-3
       li.nav-item.text-nowrap
-        button.nav-link.btn.btn-default.text-white(@click.prevent="logout") Sign out
+        button.nav-link.btn.btn-default.text-white(@click.prevent="logout")
+          img.profile-img(:src="this.$store.getters.getUser.images[0].url")
+          | &nbsp;Sign out ({{this.$store.getters.getUser.display_name}})
 </template>
 
 <script>
   export default {
     methods: {
       logout() {
-        this.$store.dispatch("logoutUser").then(() => {
-
-        })
+        this.$store.dispatch("logoutUser")
       }
     }
   }
@@ -25,5 +25,9 @@
 <style scoped>
 img{
   height: 50px;
+}
+.profile-img{
+  height: 40px !important;
+  border-radius: 50%;
 }
 </style>

@@ -4,7 +4,14 @@ import router from "@/router";
 
 const state = {
   code: '',
-  tokens: {}
+  tokens: {},
+  user: {
+    images: [
+      {
+        url: ""
+      }
+    ]
+  }
 };
 
 const getters = {
@@ -13,6 +20,9 @@ const getters = {
   },
   getTokens(state) {
     return state.tokens
+  },
+  getUser(state) {
+    return state.user
   },
   isAuthenticated(state) {
     return state.code !== ''
@@ -26,9 +36,19 @@ const mutations = {
   setToken(state, data) {
     state.tokens = data
   },
+  setUser(state, data) {
+    state.user = data
+  },
   clearState(state) {
     state.code = ''
     state.tokens = {}
+    state.user = {
+      images: [
+        {
+          url: ""
+        }
+      ]
+    }
   }
 };
 
@@ -46,15 +66,29 @@ const actions = {
     }).then(res => {
         if (res.status === 200) {
           commit("setToken", res.data)
+          dispatch("getUser")
+          dispatch("getRecentlyPlayedTracks")
         } else {
-          dispatch("logoutUser");
+          console.log()
+          dispatch("logoutUser")
         }
       })
       .catch(() => {
-        dispatch("logoutUser");
+        dispatch("logoutUser")
     });
   },
+  getUser({getters, commit}) {
+    Vue.axios.get("https://api.spotify.com/v1/me", {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + getters.getTokens['access_token']
+      }
+    }).then(res => {
+      commit("setUser", res.data)
+    })
+  },
   logoutUser({commit}) {
+    console.log("logoutUser")
     commit("clearState")
     router.replace("/auth")
   },
