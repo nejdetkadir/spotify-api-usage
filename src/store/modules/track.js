@@ -48,7 +48,6 @@ const actions = {
       }
     }).then(res => {
       if (res.status === 200) {
-        console.log(res.data)
         commit("setCurrentPlayback", res.data);
       } else {
         console.log("getCurrentPlaybackError")
@@ -112,7 +111,7 @@ const actions = {
       }
     }).then(res => {
       if (res.status !== 204) {
-        console.log("ERROR")
+        console.log("setVolumeError")
       }
     })
   },

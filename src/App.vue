@@ -1,4 +1,5 @@
 <template lang="pug">
+  keep-alive
     router-view
 </template>
 
@@ -34,6 +35,9 @@ body {
 @media (max-width: 767.98px) {
   .sidebar {
     top: 5rem;
+  }
+  main{
+    margin-bottom: 50px;
   }
 }
 
@@ -95,5 +99,9 @@ body {
 
 .my-bg-dark {
   background-color: black !important;
+}
+
+main{
+  margin-bottom: 100px;
 }
 </style>

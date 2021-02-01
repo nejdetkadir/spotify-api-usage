@@ -74,7 +74,6 @@ const actions = {
           dispatch("getRecentlyPlayedTracks")
           dispatch("getCurrentPlayback")
         } else {
-          console.log()
           dispatch("logoutUser")
         }
       })
@@ -93,7 +92,6 @@ const actions = {
     })
   },
   logoutUser({commit}) {
-    console.log("logoutUser")
     commit("clearState")
     router.replace("/auth")
   },

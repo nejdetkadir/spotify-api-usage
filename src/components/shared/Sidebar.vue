@@ -3,7 +3,7 @@
     .position-sticky.pt-5
       ul.nav.flex-column
         li.nav-item
-          a.nav-link.active(aria-current='page' href='#')
+          router-link(to="/").nav-link
             font-awesome-icon(icon='home')
             | &nbsp;Homepage
         li.nav-item
