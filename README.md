@@ -2,6 +2,8 @@
 # Spotify API Usage
 An app that showcases how to use Spotify API with VueJS
 
+![cover](doc/cover.png)
+
 ## Project setup
 ```
 yarn install
