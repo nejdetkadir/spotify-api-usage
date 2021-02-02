@@ -2,13 +2,33 @@
 # Spotify API Usage
 An app that showcases how to use Spotify API with VueJS
 
-![cover](doc/cover.png)
+![cover](doc/cover.gif)
 
+# Features
+- Authenticate with Spotify account
+- Read user information 
+- Read user's recently played
+- Read current playback
+- Read user's top tracks
+- Skip user's playback to next/previous track
+- Start/Resume a user's playback (unstable)
+- Pause a user's playback
+- Search for an item
+- Set volume for user's playback
+- Read artists and albums
+
+![spotify for developers](doc/spotify-for-developers.jpg)
 ## Project setup
 ```
 yarn install
 ```
-
+### Environment variables
+Create a file named ".env.local" in the root directory and fill its contents as follows. For more information about [Spotify API](https://developer.spotify.com/)
+```dotenv
+VUE_APP_SPOTIFY_REDIRECT_URL=XXX
+VUE_APP_SPOTIFY_CLIENT_ID=XXX
+VUE_APP_SPOTIFY_CLIENT_SECRET=XXX
+```
 ### Compiles and hot-reloads for development
 ```
 yarn serve
