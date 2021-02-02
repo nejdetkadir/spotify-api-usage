@@ -73,6 +73,7 @@ const actions = {
           dispatch("getUser")
           dispatch("getRecentlyPlayedTracks")
           dispatch("getCurrentPlayback")
+          dispatch("getUserTop")
         } else {
           dispatch("logoutUser")
         }

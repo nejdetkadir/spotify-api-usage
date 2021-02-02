@@ -10,7 +10,8 @@ const state = {
     tracks: {
       items: []
     }
-  }
+  },
+  userTop: {}
 };
 
 const getters = {
@@ -22,6 +23,9 @@ const getters = {
   },
   getSearchData(state) {
     return state.searchData
+  },
+  getUserTop(state) {
+    return state.userTop
   }
 };
 
@@ -34,6 +38,9 @@ const mutations = {
   },
   setSearchData(state, data) {
     state.searchData = data
+  },
+  setUserTop(state, data) {
+    state.userTop = data
   }
 };
 
@@ -143,6 +150,23 @@ const actions = {
       }
     }).catch(() => {
       console.log("searchError")
+    })
+  },
+  getUserTop({getters, commit}) {
+    Vue.axios.get("https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=20", {
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': 'Bearer ' + getters.getTokens["access_token"]
+      }
+    }).then((res) => {
+      if (res.status === 200) {
+        commit("setUserTop", res.data)
+        console.log(res.data)
+      } else {
+        console.log("getUserTopError")
+      }
+    }).catch(() => {
+      console.log("getUserTopError")
     })
   }
 };

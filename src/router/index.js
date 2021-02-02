@@ -6,6 +6,7 @@ import store from "@/store";
 import Artist from "@/views/Artist";
 import Album from "@/views/Album";
 import Search from "@/views/Search";
+import Profile from "@/views/Profile";
 
 Vue.use(VueRouter)
 
@@ -81,6 +82,18 @@ const routes = [
     path: '/search',
     name: 'Search',
     component: Search,
+    beforeEnter(to, from, next) {
+      if (store.getters.isAuthenticated) {
+        next()
+      } else {
+        next("/auth")
+      }
+    },
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
     beforeEnter(to, from, next) {
       if (store.getters.isAuthenticated) {
         next()
